@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import axios from 'axios'; // Import axios to make API calls
 
 const BookDetail = () => {
-  const { id } = useParams(); // Get the book ID from the URL
+  const { id } = useParams();  // Get the book ID from the URL
   const [book, setBook] = useState(null);
 
-//   useEffect(() => {
-//     axios.get()
-//       .then(response => {
-//         setBooks(response.data);
-//       })
-//       .catch(error => console.error('Error fetching books details:', error));
-//   }, []);
+  useEffect(() => {
+    axios.get(`http://localhost:4000/books/${id}`)  // Fetch book details
+      .then(response => {
+        setBook(response.data);
+      })
+      .catch(error => console.error('Error fetching book details:', error));
+  }, [id]);
 
   if (!book) return <div>Loading...</div>;
 

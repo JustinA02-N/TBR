@@ -10,9 +10,7 @@ function App() {
     <Router>
       <div className="container py-4">
         <h1>TBR Tracker</h1>
-        <Routes>
-          {/* Add a route for the home page */}
-          <Route path="/" element={<BookList />} /> 
+        <Routes> 
           <Route path="/books" element={<BookList />} />
           <Route path="/books/:id" element={<BookDetail />} />
           <Route path="/add" element={<BookForm />} />

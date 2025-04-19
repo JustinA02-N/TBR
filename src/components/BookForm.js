@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios'; 
+import { TextField, Button } from '@mui/material';
 
 const BookForm = () => {
   const { id } = useParams();
@@ -12,17 +14,40 @@ const BookForm = () => {
     description: '',
   });
 
-//   useEffect(() => {
-//     axios.get()
-//       .then(response => {
-//         setBooks(response.data);
-//       })
-//       .catch(error => console.error('Error fetching books Form:', error));
-//   }, []);
+  
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:4000/books/${id}`)
+        .then(response => {
+          setBook(response.data);
+        })
+        .catch(error => console.error('Error fetching book data:', error));
+    }
+  }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/books');
+
+    // Check if we're creating or editing
+    if (id) {
+      // Send a PUT request to update the book
+      axios.put(`http://localhost:4000/books/${id}`, book)
+        .then((response) => {
+          navigate('/books');
+        })
+        .catch((error) => {
+          console.error('Error updating book:', error);
+        });
+    } else {
+      // Send a POST request to create a new book
+      axios.post('http://localhost:4000/books', book)
+        .then((response) => {
+          navigate('/books');
+        })
+        .catch((error) => {
+          console.error('Error creating book:', error);
+        });
+    }
   };
 
   return (

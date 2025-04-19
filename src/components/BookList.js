@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios'; 
 
 const BookList = () => {
-  const [books, setBooks] = useState([
-    { _id: '1', title: '1984', author: 'George Orwell', status: 'To Read' },
-    { _id: '2', title: 'Atomic Habits', author: 'James Clear', status: 'Reading' },
-  ]);
+  const [books, setBooks] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get()
-  //     .then(response => {
-  //       setBooks(response.data);
-  //     })
-  //     .catch(error => console.error('Error fetching books:', error));
-  // }, []);
+  useEffect(() => {
+    axios.get('http://localhost:4000/books') 
+      .then(response => {
+        setBooks(response.data);  
+      })
+      .catch(error => console.error('Error fetching books:', error));
+  }, []);
 
   return (
     <div>
