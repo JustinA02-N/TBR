@@ -1,8 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'; 
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-
 
 const BookForm = () => {
   const { id } = useParams();
@@ -15,7 +14,6 @@ const BookForm = () => {
     description: '',
   });
 
-  
   useEffect(() => {
     if (id) {
       axios.get(`http://localhost:4000/books/${id}`)
@@ -29,20 +27,19 @@ const BookForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if we're creating or editing
     if (id) {
-      // Send a PUT request to update the book
+      // Update book
       axios.put(`http://localhost:4000/books/${id}`, book)
-        .then((response) => {
+        .then(() => {
           navigate('/books');
         })
         .catch((error) => {
           console.error('Error updating book:', error);
         });
     } else {
-      // Send a POST request to create a new book
+      // Create new book
       axios.post('http://localhost:4000/books', book)
-        .then((response) => {
+        .then(() => {
           navigate('/books');
         })
         .catch((error) => {
@@ -52,52 +49,55 @@ const BookForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="title" className="form-label">Title</label>
-        <input
-          type="text"
-          id="title"
-          className="form-control"
+    <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: 'auto' }}>
+      <div style={{ marginBottom: '16px' }}>
+        <TextField
+          fullWidth
+          label="Title"
+          variant="outlined"
           value={book.title}
           onChange={(e) => setBook({ ...book, title: e.target.value })}
           required
         />
       </div>
-      <div className="mb-3">
-        <label htmlFor="author" className="form-label">Author</label>
-        <input
-          type="text"
-          id="author"
-          className="form-control"
+      <div style={{ marginBottom: '16px' }}>
+        <TextField
+          fullWidth
+          label="Author"
+          variant="outlined"
           value={book.author}
           onChange={(e) => setBook({ ...book, author: e.target.value })}
           required
         />
       </div>
-      <div className="mb-3">
-        <label htmlFor="description" className="form-label">Description</label>
-        <textarea
-          id="description"
-          className="form-control"
+      <div style={{ marginBottom: '16px' }}>
+        <TextField
+          fullWidth
+          label="Description"
+          variant="outlined"
+          multiline
+          rows={4}
           value={book.description}
           onChange={(e) => setBook({ ...book, description: e.target.value })}
         />
       </div>
-      <div className="mb-3">
-        <label htmlFor="status" className="form-label">Status</label>
-        <select
-          id="status"
-          className="form-select"
-          value={book.status}
-          onChange={(e) => setBook({ ...book, status: e.target.value })}
-        >
-          <option value="To Read">To Read</option>
-          <option value="Reading">Reading</option>
-          <option value="Finished">Finished</option>
-        </select>
+      <div style={{ marginBottom: '16px' }}>
+        <FormControl fullWidth>
+          <InputLabel>Status</InputLabel>
+          <Select
+            value={book.status}
+            onChange={(e) => setBook({ ...book, status: e.target.value })}
+            label="Status"
+          >
+            <MenuItem value="To Read">To Read</MenuItem>
+            <MenuItem value="Reading">Reading</MenuItem>
+            <MenuItem value="Finished">Finished</MenuItem>
+          </Select>
+        </FormControl>
       </div>
-      <button type="submit" className="btn btn-primary">Save</button>
+      <Button type="submit" variant="contained" color="primary" fullWidth>
+        Save
+      </Button>
     </form>
   );
 };
