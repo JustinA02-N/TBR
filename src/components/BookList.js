@@ -1,32 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; 
 
 const BookList = () => {
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:4000/books') 
-      .then(response => {
-        setBooks(response.data);  
-      })
-      .catch(error => console.error('Error fetching books:', error));
-  }, []);
+  const books = [
+    { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald' },
+    { id: 2, title: '1984', author: 'George Orwell' },
+    { id: 3, title: 'To Kill a Mockingbird', author: 'Harper Lee' },
+  ];
 
   return (
     <div>
-      <Link to="/add" className="btn btn-primary mb-3">+ Add Book</Link>
+      <h2>Book List</h2>
       <ul className="list-group">
         {books.map((book) => (
-          <li className="list-group-item d-flex justify-content-between" key={book._id}>
-            <span>{book.title} by {book.author} — {book.status}</span>
-            <span>
-              <Link to={`/books/${book._id}`} className="btn btn-sm btn-outline-secondary mx-1">View</Link>
-              <Link to={`/edit/${book._id}`} className="btn btn-sm btn-outline-primary">Edit</Link>
-            </span>
+          <li key={book.id} className="list-group-item">
+            <h5>{book.title}</h5>
+            <p>By {book.author}</p>
+            <Link to={`/books/${book.id}`} className="btn btn-primary btn-sm me-2">
+              View Details
+            </Link>
+            <Link to={`/edit/${book.id}`} className="btn btn-secondary btn-sm">
+              Edit
+            </Link>
           </li>
         ))}
       </ul>
+      <Link to="/add" className="btn btn-success mt-3">
+        Add New Book
+      </Link>
     </div>
   );
 };

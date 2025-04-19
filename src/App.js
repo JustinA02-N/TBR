@@ -11,6 +11,7 @@ function App() {
       <div className="container py-4">
         <h1>TBR Tracker</h1>
         <Routes> 
+          <Route path="/" element={<BookList />} /> {/* Add route for home */}
           <Route path="/books" element={<BookList />} />
           <Route path="/books/:id" element={<BookDetail />} />
           <Route path="/add" element={<BookForm />} />
