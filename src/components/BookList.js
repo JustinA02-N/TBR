@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 const BookList = () => {
   const books = [
-    { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald' },
-    { id: 2, title: '1984', author: 'George Orwell' },
-    { id: 3, title: 'To Kill a Mockingbird', author: 'Harper Lee' },
+    { id: 1, title: 'B1', author: 'A1' },
+    { id: 2, title: 'B2', author: 'A2' },
+    { id: 3, title: 'B3', author: 'A3' },
   ];
 
   return (
