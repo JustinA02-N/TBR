@@ -1,17 +1,25 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import api from '../api/axios';
 
 const BookDetail = () => {
   const { id } = useParams();
-  
-  // You can replace this with actual data fetching logic
-  const book = {
-    id: 1,
-    title: 'The Great Gatsby',
-    author: 'F. Scott Fitzgerald',
-    description: 'A novel about the American dream.',
-    status: 'Finished',
-  };
+  const [book, setBook] = useState(null);
+
+  // Get the book data based on book id
+  useEffect(() => {
+    api.get(`/books/${id}`)
+      .then(response => {
+        setBook(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching book details:", error);
+      });
+  }, [id]);
+
+  if (!book) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -20,6 +28,12 @@ const BookDetail = () => {
       <p><strong>Author:</strong> {book.author}</p>
       <p><strong>Description:</strong> {book.description}</p>
       <p><strong>Status:</strong> {book.status}</p>
+      <Link to={`/edit/${book._id}`} className="btn btn-secondary">
+        Edit
+      </Link>
+      <Link to="/books" className="btn btn-primary ms-2">
+        Back to List
+      </Link>
     </div>
   );
 };
