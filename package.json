@@ -1,4 +1,5 @@
 {
+ HEAD
   "name": "tbr-tracker",
   "version": "0.1.0",
   "private": true,
@@ -49,4 +50,24 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0"
   }
+
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^21.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "mongoose": "^8.14.0"
+  },
+  "devDependencies": {},
+  "description": ""
+ 20e4966 (Initial backend push)
 }
